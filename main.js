@@ -149,11 +149,18 @@ function startApp() {
     tray = new Tray(path.join(__dirname, 'ic_launcher.png'));
     var menu = [];
     menu.push({
+      label: "Refresh",
+      click() {
+        refresh();
+      }
+    });
+    menu.push({type: "separator"});
+    menu.push({
       label: "Configure",
       click() {
         showWindow();
       }
-    })
+    });
     const contextMenu = Menu.buildFromTemplate(menu);
 
     tray.setContextMenu(contextMenu);
