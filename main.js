@@ -229,6 +229,7 @@ function displayTimer() {
     var calendar = getCalendar();
     var now = new Date()*1;
     var during = false;
+    var ev = null;
     var toEnd = now*1;
     var toEndTitle = "";
     var toStart = now*1000;
@@ -246,12 +247,14 @@ function displayTimer() {
       if (event.end-now>0 && event.end-now<toEnd) {
         toEnd=event.end-now;
         toEndTitle=event.title;
-
+        ev = event;
       }
       during|=event.start<=now && event.end>=now;
     }
     if (timerAvailable) {
       tray.setTitle(toText(during?toEnd:toStart));
+      var d = during?ev.end:ev.start
+      tray.setToolTip(d.toDateString().split(" ")[0]+" "+d.toLocaleString());
       var imgLocation = app.getAppPath() + "/" + (during?"red":"green") + ".png";
       tray.setImage(imgLocation);
     }
